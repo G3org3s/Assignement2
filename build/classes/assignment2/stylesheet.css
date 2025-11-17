@@ -5,7 +5,6 @@
     src: url('Geo.ttf');
 }
 
-
 /* Root style */
 .root {
     -fx-background-color: linear-gradient(to bottom right, #1e1e2f, #3f3f5b);
@@ -22,7 +21,7 @@
     -fx-background-color: #6a5acd;
 }
 #play-button {
-    -fx-font-size: 40px;
+    -fx-font-size: 42px;
     -fx-font-family: 'Geo';
     -fx-font-weight: bold;
     -fx-text-fill: white;
@@ -48,6 +47,4 @@
 .label {
     -fx-font-family: 'Geo';
 }
-
-
 

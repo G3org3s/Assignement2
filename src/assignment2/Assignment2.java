@@ -35,6 +35,8 @@ import javafx.util.Duration;
 /**
  *
  * @author Cheero
+ * 
+ * github username: G3org3s
  */
 public class Assignment2 extends Application {
 
@@ -207,7 +209,6 @@ public class Assignment2 extends Application {
                     finish.setStyle("-fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: white;");
                     finish.setX(endX- 20);
                     finish.setY(laneY - 5);
-                    
                     centerPane.getChildren().add(finish);
                     
                     // Add the letter H at the end since 1 more letter than lanes
@@ -252,10 +253,10 @@ public class Assignment2 extends Application {
                     centerPane.getChildren().add(iv);
 
                     // Translate Transition
-                    double xToTravel = endX - startX;
+                    double xTravelDistance = endX - startX;
                     double durationSeconds = 5.0 / m.getSpeed(); // faster speed leads to smaller duration
                     TranslateTransition tt = new TranslateTransition(Duration.seconds(durationSeconds), iv);
-                    tt.setByX(xToTravel);
+                    tt.setByX(xTravelDistance);
                     tts.add(tt);
 
                     // Particle trail
@@ -356,7 +357,6 @@ public class Assignment2 extends Application {
                         // Start the transition for each runner
                         tt.play();
                     }
-
                 }
                 );
 
@@ -387,7 +387,6 @@ public class Assignment2 extends Application {
                     // Setting back to main menu
                     root.getChildren().setAll(playBtn);
                 });
-
                 // Add the borderpane to root
                 root.getChildren().add(bp);
             }
@@ -396,12 +395,10 @@ public class Assignment2 extends Application {
             seq.play();
         }
         );
-
         // Setting the stage
         stage.setTitle(
                 "Main Menu");
         stage.setScene(scene);
-
         stage.show();
     }
 }
