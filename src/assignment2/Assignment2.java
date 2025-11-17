@@ -191,11 +191,34 @@ public class Assignment2 extends Application {
                 int n = runners.size();          // Number of runners
                 double topMargin = 60;           // Distance from top
                 double laneSpacing = 70;
-
+                
+                String[] finishText = {"F", "I", "N", "I", "S", "H"};
                 // Creating tracks and name labels on Pane
                 for (int i = 0; i < n; i++) {
                     double laneY = topMargin + i * laneSpacing; // Y of  each lane, so each runner is separated
-
+                    
+                    if (i == 0) {
+                        Rectangle finishLine = new Rectangle(endX - 30, laneY, 3, topMargin + 4 * laneSpacing);
+                        centerPane.getChildren().add(finishLine);
+                    }
+                    
+                    // Write the text for the Finish Line
+                    Text finish = new Text(finishText[i]);
+                    finish.setStyle("-fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: white;");
+                    finish.setX(endX- 20);
+                    finish.setY(laneY - 5);
+                    
+                    centerPane.getChildren().add(finish);
+                    
+                    // Add the letter H at the end since 1 more letter than lanes
+                    if (i == 4) {
+                        Text H = new Text(finishText[i + 1]);
+                        H.setStyle("-fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: white;");
+                        H.setX(endX- 20);
+                        H.setY(topMargin + 5 * laneSpacing - 5);
+                        centerPane.getChildren().add(H);
+                    }
+                    
                     // Track as a thin rectangle (line)
                     Rectangle track = new Rectangle(startX - 30, laneY + 24, endX - startX + 60, 3);
                     track.setFill(Color.DARKGRAY);
@@ -208,7 +231,7 @@ public class Assignment2 extends Application {
                     nameLabel.setLayoutX(10);
                     nameLabel.setLayoutY(laneY);
                     centerPane.getChildren().add(nameLabel);
-                }
+                } 
 
                 // List storing the transition of each runner
                 ArrayList<TranslateTransition> tts = new ArrayList<>();
