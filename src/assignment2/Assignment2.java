@@ -4,21 +4,18 @@
  */
 package assignment2;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Optional;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,6 +24,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -92,6 +91,19 @@ public class Assignment2 extends Application {
                 new Image("file:Cube137.png"),
                 "Jack"
         ));
+
+        // Music
+        String musicPath = Paths.get("")
+                .toAbsolutePath()
+                .resolve("MenuMusic.mp3")
+                .toUri()
+                .toString();
+
+        Media media = new Media(musicPath);
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(0.3);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.play();
 
         // Action once the start button is pressed
         playBtn.setOnAction(e -> {
@@ -284,9 +296,9 @@ public class Assignment2 extends Application {
                         if (tts.get(i).getDuration().lessThan(tts.get(winnerIdx).getDuration())) {
                             secondIdx = winnerIdx;
                             winnerIdx = i;
-                        } else {
-                            if (secondIdx == -1 || tts.get(i).getDuration().lessThan(tts.get(secondIdx).getDuration())) {
-                                secondIdx = i;
+                        } else if (secondIdx == -1 || tts.get(i).getDuration().lessThan(tts.get(secondIdx).getDuration())) {
+                            if (i != winnerIdx) {
+                            secondIdx = i; 
                             }
                         }
                     }
@@ -361,7 +373,7 @@ public class Assignment2 extends Application {
             seq.play();
         }
         );
-        
+
         // Setting the stage
         stage.setTitle(
                 "Main Menu");
