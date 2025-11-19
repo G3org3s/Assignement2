@@ -35,7 +35,7 @@ import javafx.util.Duration;
 /**
  *
  * @author Cheero
- * 
+ *
  * github username: G3org3s
  */
 public class Assignment2 extends Application {
@@ -127,11 +127,12 @@ public class Assignment2 extends Application {
             presenting.setStyle("-fx-font-size: 56px; -fx-text-fill: white; -fx-font-weight: bold;");
             presenting.setLayoutX(350);
             presenting.setLayoutY(10);
-
-            presentationBox.getChildren().addAll(presenting, imgView, nameText);
+            Button skip = new Button("Skip");
+            presentationBox.getChildren().addAll(presenting, imgView, nameText, skip);
 
             // Replace menu with presentation
             root.getChildren().setAll(presentationBox);
+            
 
             // Animation sequence for presenting runners
             SequentialTransition seq = new SequentialTransition();
@@ -172,6 +173,10 @@ public class Assignment2 extends Application {
 
                 // Create the sequence
                 seq.getChildren().addAll(updateContent, fadeBoth, fadeOutBoth);
+                
+                skip.setOnAction(eh -> {
+                    seq.jumpTo(seq.getTotalDuration());
+                });
             }
 
             // After presenting the runners, set up the race UI
@@ -193,33 +198,33 @@ public class Assignment2 extends Application {
                 int n = runners.size();          // Number of runners
                 double topMargin = 60;           // Distance from top
                 double laneSpacing = 70;
-                
+
                 String[] finishText = {"F", "I", "N", "I", "S", "H"};
                 // Creating tracks and name labels on Pane
                 for (int i = 0; i < n; i++) {
                     double laneY = topMargin + i * laneSpacing; // Y of  each lane, so each runner is separated
-                    
+
                     if (i == 0) {
                         Rectangle finishLine = new Rectangle(endX - 30, laneY, 3, topMargin + 4 * laneSpacing);
                         centerPane.getChildren().add(finishLine);
                     }
-                    
+
                     // Write the text for the Finish Line
                     Text finish = new Text(finishText[i]);
                     finish.setStyle("-fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: white;");
-                    finish.setX(endX- 20);
+                    finish.setX(endX - 20);
                     finish.setY(laneY - 5);
                     centerPane.getChildren().add(finish);
-                    
+
                     // Add the letter H at the end since 1 more letter than lanes
                     if (i == 4) {
                         Text H = new Text(finishText[i + 1]);
                         H.setStyle("-fx-font-weight: bold; -fx-font-family: 'Arial'; -fx-fill: white;");
-                        H.setX(endX- 20);
+                        H.setX(endX - 20);
                         H.setY(topMargin + 5 * laneSpacing - 5);
                         centerPane.getChildren().add(H);
                     }
-                    
+
                     // Track as a thin rectangle (line)
                     Rectangle track = new Rectangle(startX - 30, laneY + 24, endX - startX + 60, 3);
                     track.setFill(Color.DARKGRAY);
@@ -232,7 +237,7 @@ public class Assignment2 extends Application {
                     nameLabel.setLayoutX(10);
                     nameLabel.setLayoutY(laneY);
                     centerPane.getChildren().add(nameLabel);
-                } 
+                }
 
                 // List storing the transition of each runner
                 ArrayList<TranslateTransition> tts = new ArrayList<>();
@@ -240,7 +245,7 @@ public class Assignment2 extends Application {
                 // Placing the Runners and making their transitions
                 for (int i = 0; i < n; i++) {
                     Marathoner m = runners.get(i);
-                    m.setSpeed(0.5 + Math.random()); // random speed. Uses default bounds [0.0 ; 1.0[
+                    m.setSpeed(0.5 + Math.random()); // random speed. Uses def ault bounds [0.0 ; 1.0[
                     double laneY = topMargin + i * laneSpacing; // where to place the runner
 
                     ImageView iv = new ImageView(m.getRaceImage()); // Image 
@@ -280,7 +285,7 @@ public class Assignment2 extends Application {
                         TranslateTransition drift = new TranslateTransition(Duration.seconds(0.5), particle);
                         drift.setByX(-20 + Math.random() * -10); // Go to the left
                         drift.setByY(-10 + Math.random() * -10); // Go upward
-                        // Make partcle fade
+                        // Make particle fade
                         FadeTransition fade = new FadeTransition(Duration.seconds(0.5), particle);
                         fade.setFromValue(1);
                         fade.setToValue(0);
@@ -301,6 +306,7 @@ public class Assignment2 extends Application {
                 pauseBtn.setDisable(true);  // disabled until race started
 
                 Text message = new Text("Marathon Status: Ongoing");
+                message.setTranslateX(250);
                 message.setStyle("-fx-font-size: 12px; -fx-fill: white; -fx-font-weight: bold;");
 
                 HBox controls = new HBox(12, startBtn, pauseBtn, exitBtn, message);
@@ -322,7 +328,7 @@ public class Assignment2 extends Application {
                             winnerIdx = i;
                         } else if (secondIdx == -1 || tts.get(i).getDuration().lessThan(tts.get(secondIdx).getDuration())) {
                             if (i != winnerIdx) {
-                            secondIdx = i; 
+                                secondIdx = i;
                             }
                         }
                     }
@@ -393,6 +399,7 @@ public class Assignment2 extends Application {
             );
             // Place the presentation of runners
             seq.play();
+
         }
         );
         // Setting the stage
